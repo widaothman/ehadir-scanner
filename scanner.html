@@ -1,66 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>e-Hadir Scanner Test</title>
+<title>Camera Test</title>
 
 <style>
-
 body{
-  font-family:Arial,sans-serif;
+  font-family:Arial;
   text-align:center;
   padding:20px;
 }
 
-#reader{
+video{
   width:100%;
   max-width:500px;
-  margin:auto;
+  border:2px solid #ccc;
 }
-
-#hasil{
-  margin-top:20px;
-  font-size:24px;
-  font-weight:bold;
-  color:green;
-}
-
 </style>
 
 </head>
 <body>
 
-<h2>📷 Scanner Test</h2>
+<h2>Camera Test</h2>
 
-<div id="reader"></div>
+<video id="video" autoplay playsinline></video>
 
-<div id="hasil">
-Belum scan
-</div>
-
-<script src="https://unpkg.com/html5-qrcode"></script>
+<p id="status">Memulakan kamera...</p>
 
 <script>
 
-function onScanSuccess(decodedText){
+const video = document.getElementById("video");
 
-  document.getElementById("hasil").innerHTML =
-    "QR: " + decodedText;
+navigator.mediaDevices.getUserMedia({
+  video:{
+    facingMode:"environment"
+  }
+})
+.then(function(stream){
 
-}
+  video.srcObject = stream;
 
-let html5QrcodeScanner =
-  new Html5QrcodeScanner(
-    "reader",
-    {
-      fps:10,
-      qrbox:250
-    }
-  );
+  document.getElementById("status").innerHTML =
+    "✅ Kamera berjaya dibuka";
 
-html5QrcodeScanner.render(onScanSuccess);
+})
+.catch(function(err){
+
+  document.getElementById("status").innerHTML =
+    "❌ " + err;
+
+});
 
 </script>
 
