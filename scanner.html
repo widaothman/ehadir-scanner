@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Camera Test</title>
+<title>e-Hadir QR Scanner</title>
 
 <style>
+
 body{
-  font-family:Arial;
+  font-family:Arial,sans-serif;
   text-align:center;
   padding:20px;
 }
@@ -16,40 +17,82 @@ body{
 video{
   width:100%;
   max-width:500px;
-  border:2px solid #ccc;
+  border-radius:12px;
 }
+
+#hasil{
+  margin-top:20px;
+  font-size:24px;
+  font-weight:bold;
+  color:green;
+}
+
+button{
+  width:100%;
+  max-width:500px;
+  padding:15px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  margin-top:15px;
+  background:#2DC87A;
+  color:white;
+}
+
 </style>
+
+<script src="https://unpkg.com/qr-scanner/qr-scanner.umd.min.js"></script>
 
 </head>
 <body>
 
-<h2>Camera Test</h2>
+<h2>📷 e-Hadir QR Scanner</h2>
 
-<video id="video" autoplay playsinline></video>
+<video id="video" playsinline></video>
 
-<p id="status">Memulakan kamera...</p>
+<div id="hasil">
+Sedia untuk scan...
+</div>
+
+<button id="btnSahkan" style="display:none;">
+✓ GUNA ID INI
+</button>
 
 <script>
 
 const video = document.getElementById("video");
+const hasil = document.getElementById("hasil");
+const btn = document.getElementById("btnSahkan");
 
-navigator.mediaDevices.getUserMedia({
-  video:{
-    facingMode:"environment"
+let currentID = "";
+
+const scanner = new QrScanner(
+  video,
+  result => {
+
+    currentID = result.data.trim();
+
+    hasil.innerHTML =
+      "ID Murid: <b>" + currentID + "</b>";
+
+    btn.style.display = "block";
+
+    scanner.stop();
+
+  },
+  {
+    returnDetailedScanResult:true
   }
-})
-.then(function(stream){
+);
 
-  video.srcObject = stream;
+scanner.start();
 
-  document.getElementById("status").innerHTML =
-    "✅ Kamera berjaya dibuka";
+btn.addEventListener("click", function(){
 
-})
-.catch(function(err){
-
-  document.getElementById("status").innerHTML =
-    "❌ " + err;
+  alert(
+    "ID Murid berjaya dibaca:\n\n" +
+    currentID
+  );
 
 });
 
