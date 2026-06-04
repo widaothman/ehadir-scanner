@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>e-Hadir Scanner Test</title>
+
+<style>
+
+body{
+  font-family:Arial,sans-serif;
+  text-align:center;
+  padding:20px;
+}
+
+#reader{
+  width:100%;
+  max-width:500px;
+  margin:auto;
+}
+
+#hasil{
+  margin-top:20px;
+  font-size:24px;
+  font-weight:bold;
+  color:green;
+}
+
+</style>
+
+</head>
+<body>
+
+<h2>📷 Scanner Test</h2>
+
+<div id="reader"></div>
+
+<div id="hasil">
+Belum scan
+</div>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+
+function onScanSuccess(decodedText){
+
+  document.getElementById("hasil").innerHTML =
+    "QR: " + decodedText;
+
+}
+
+let html5QrcodeScanner =
+  new Html5QrcodeScanner(
+    "reader",
+    {
+      fps:10,
+      qrbox:250
+    }
+  );
+
+html5QrcodeScanner.render(onScanSuccess);
+
+</script>
+
+</body>
+</html>
