@@ -116,10 +116,9 @@ scanner.start()
 
 btn.addEventListener("click", function(){
 
-  alert(
-    "ID Murid berjaya dibaca:\n\n" +
-    currentID
-  );
+  window.location.href =
+    "https://script.google.com/macros/s/AKfycbyiXYuNvjfP-MIdMR9Pe01VqfFN7uqDeApx2nIlfDRWADtGYEL6sFlGjKC86AZNAYl7Tg/exec?page=scan&id=" +
+    encodeURIComponent(currentID);
 
 });
 
