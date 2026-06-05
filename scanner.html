@@ -48,7 +48,13 @@ button{
 
 <h2>📷 e-Hadir QR Scanner</h2>
 
-<video id="video" playsinline></video>
+<video
+  id="video"
+  playsinline
+  autoplay
+  muted
+  style="width:100%;max-width:500px;">
+</video>
 
 <div id="hasil">
 Sedia untuk scan...
@@ -85,7 +91,21 @@ const scanner = new QrScanner(
   }
 );
 
-scanner.start();
+scanner.start()
+.then(() => {
+
+  hasil.innerHTML =
+    "✅ Kamera aktif. Halakan kepada QR";
+
+})
+.catch(err => {
+
+  hasil.innerHTML =
+    "❌ " + err;
+
+  console.error(err);
+
+});
 
 btn.addEventListener("click", function(){
 
