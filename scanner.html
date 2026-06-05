@@ -76,10 +76,14 @@ const scanner = new QrScanner(
   video,
   result => {
 
-    currentID = result.data.trim();
+    console.log(result);
+
+    currentID = result.data
+      ? result.data.trim()
+      : String(result).trim();
 
     hasil.innerHTML =
-      "ID Murid: <b>" + currentID + "</b>";
+      "✅ QR Dikesan: " + currentID;
 
     btn.style.display = "block";
 
@@ -87,7 +91,10 @@ const scanner = new QrScanner(
 
   },
   {
-    returnDetailedScanResult:true
+    preferredCamera: "environment",
+    highlightScanRegion: true,
+    highlightCodeOutline: true,
+    returnDetailedScanResult: true
   }
 );
 
