@@ -78,9 +78,21 @@ const scanner = new QrScanner(
 
     console.log(result);
 
-    currentID = result.data
-      ? result.data.trim()
-      : String(result).trim();
+    let qrData = result.data
+  ? result.data.trim()
+  : String(result).trim();
+
+if (qrData.includes("id=")) {
+
+  const url = new URL(qrData);
+
+  currentID = url.searchParams.get("id");
+
+} else {
+
+  currentID = qrData;
+
+}
 
     hasil.innerHTML =
       "✅ QR Dikesan: " + currentID;
